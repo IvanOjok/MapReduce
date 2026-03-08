@@ -4,13 +4,13 @@ class AverageCount(MRJob):
 
     def mapper(self, _, line):
         # Split tab-separated values
-        user_id, item_id, rating, timestamp = line.strip().split('\t')
-        yield item_id, int(rating)
+        user_id, movie_id, rating, timestamp = line.strip().split('\t')
+        yield movie_id, int(rating)
 
         
-    def reducer(self, item_id, rating):
+    def reducer(self, movie_id, rating):
         ratings = list(rating)
-        yield item_id, sum(ratings)/len(ratings)
+        yield movie_id, sum(ratings)/len(ratings)
 
 if __name__ == '__main__':
     AverageCount.run()
